@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .stop-watch-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+</style>
+<body>
+<div class="stop-watch-container">
+    <h1>Stopwatch</h1>
+    <p>
+        <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tens">00</span>
+    </p>
+    <div>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+    </div>
+
+</div>
+</body>
+<script>
+    window.onload = function () {
+        let tens = '00';
+        let second = '00';
+        let minutes = '00';
+        let minutesAppend = document.querySelector('#minutes')
+        let secondsAppend = document.querySelector('#seconds')
+        let tensAppend = document.querySelector('#tens')
+        let startBtn = document.querySelector('#start')
+        let stopBtn = document.querySelector('#stop')
+        let resetBtn = document.querySelector('#reset')
+        let interval;
+
+        const startTimer = () => {
+            tens++;
+            if (tens < 9) {
+                tensAppend.innerHTML = '0' + tens;
+            } else if (tens > 9) {
+                tensAppend.innerHTML = tens;
+            }
+
+            if (tens > 99) {
+                tens = '00';
+                tensAppend.innerHTML = tens;
+                second++;
+                secondsAppend.innerHTML = '0' + second;
+            }
+            if (second > 9) {
+                secondsAppend.innerHTML = second;
+            }
+            if (second > 59) {
+                minutes++;
+                minutesAppend.innerHTML = '0' + minutes;
+                second = '00';
+                secondsAppend.innerHTML = second;
+            }
+        }
+
+        startBtn.onclick = () => {
+            clearInterval(interval);
+            interval = setInterval(startTimer, 10);
+        };
+
+        stopBtn.onclick = () => {
+            clearInterval(interval);
+        };
+
+        resetBtn.onclick = () => {
+            clearInterval(interval);
+            tens = '00';
+            tensAppend.innerHTML = tens;
+            second = '00';
+            secondsAppend.innerHTML = second;
+            minutes = '00';
+            minutesAppend.innerHTML = minutes;
+        };
+    }
+</script>
+</html>
